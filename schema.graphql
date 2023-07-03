@@ -1,0 +1,105 @@
+type User {
+  id: ID!
+  firstName: String!
+  lastName: String!
+  fullName: String
+  phoneNumber: String!
+  email: String!
+  password: String!
+}
+
+type Product {
+  id: Int!
+  title: String!
+  description: String!
+  price: Float!
+  discountPercentage: Float!
+  rating: Float!
+  stock: Int!
+  brand: String!
+  category: String!
+  thumbnail: String!
+  images: [String!]!
+}
+
+type Cart {
+  id: Int!
+  totalItems: Int!
+  items: [CartItem!]!
+  subTotal: Int!
+}
+
+type CartItem {
+  id: ID!
+  productId: Int!
+  name: String!
+  description: String
+  price: String!
+  quantity: Int!
+  image: String!
+}
+type Address {
+  id: ID!
+  name: String!
+  address: String!
+  cityname: String!
+  state: String!
+  zipcode: String!
+}
+input Payment {
+  cardNumber: String!
+  cardName: String!
+  expiration: String!
+  cvv: String!
+}
+input AddressInput {
+  id: ID
+  name: String!
+  address: String!
+  cityname: String!
+  state: String!
+  zipcode: String!
+}
+input Item {
+  description: String!
+  image: String!
+  name: String!
+  price: String!
+  productId: Int!
+  quantity: Int!
+}
+input Order {
+  object1: AddressInput!
+  object2: Payment!
+  object3: [Item!]
+}
+type Query {
+  userProfile(id: ID!): User!
+  oneProductData(id: Int!): Product!
+  allProductsData(id: Int): [Product!]!
+  allCartItems(id: Int): [CartItem!]
+  getAllAddress(id: Int): [Address!]
+  getAddressById(id: ID!): Address!
+}
+
+type Mutation {
+  userRegister(
+    firstName: String!
+    lastName: String!
+    phoneNumber: String!
+    email: String!
+    password: String!
+  ): User!
+  userLogin(email: String!, password: String!): User!
+  addCartItem(productId: Int!, quantity: Int!): String
+  deleteCartItem(productId: Int!): String
+  addAddress(
+    name: String!
+    address: String!
+    cityname: String!
+    state: String!
+    zipcode: String!
+  ): ID
+  addOrder(Order: Order!): String!
+  deleteAllCartItems(id: Int): String!
+}
